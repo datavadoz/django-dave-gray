@@ -26,6 +26,35 @@ cd myproject
 python manage.py runserver
 ```
 
+### How-to: Create a new app/module 
+```bash
+cd myproject
+python manage.py startapp posts # Create posts app
+```
+
+The source tree will look like:
+```commandline
+.
+└── myproject
+  ├── manage.py
+  ├── myproject
+  │  ├── __init__.py
+  │  ├── asgi.py
+  │  ├── settings.py
+  │  ├── urls.py
+  │  ├── views.py
+  │  └── wsgi.py
+  └── posts
+     ├── __init__.py
+     ├── admin.py
+     ├── apps.py
+     ├── migrations
+     │  └── __init__.py
+     ├── models.py
+     ├── tests.py
+     └── views.py
+```
+
 ### How-to: Render a response/view regarding a URL
 1. Define a view (i.e: **my_view**) in `myproject/myproject/views.py`:
     ```python
