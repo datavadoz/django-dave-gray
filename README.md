@@ -153,7 +153,6 @@ python manage.py runserver
    ```
 
 ### How-to: Develop an app/module
-
 1. Create a new app name **posts** by `manage.py` script:
    ```bash
    cd myproject
@@ -239,3 +238,68 @@ python manage.py runserver
        path('posts', include('posts.urls'))  # Use posts.urls for posts url
    ]
    ```
+
+### How-to: Use template
+1. Need a layout (i.e: **layout.html**) and define which section in that layout will be changed according to other individual views.
+   ```html
+   <!DOCTYPE html>
+   {% load static %}
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+       <title>
+           {% block title %}
+               Django App
+           {% endblock%}
+       </title>
+       <link rel="stylesheet" href="{% static 'css/style.css' %}">
+       <script src="{% static 'js/main.js' %}" defer></script>
+   </head>
+   <body>
+       <nav>
+           <a href="/">🏠</a> |
+           <a href="/about">😀</a> |
+           <a href="/posts">📰</a>
+       </nav>
+       <main>
+           {% block content %}
+           {% endblock %}
+       </main>
+   </body>
+   </html>
+   ```
+   Those sections are defined as `block`:
+   ```html
+   {% block <name_of_the_block> %}
+   {% endblock %}
+   ```
+2. In other HTML, extend the predefined layout and fill in blocks with the right data:
+   
+   For example: **posts_list.html**:
+   ```html
+   {% extends 'layout.html' %}
+
+   {% block title %}
+       Posts List
+   {% endblock %}
+   
+   {% block content %}
+       <h1>Posts List</h1>
+   {% endblock %}
+   ```
+   
+   For example: **home.html**:
+   ```html
+   {% extends 'layout.html' %}
+
+   {% block title %}
+       Home
+   {% endblock %}
+   
+   {% block content %}
+       <h1>Home</h1>
+       <p>Check out my <a href="/about">About</a> page.</p>
+   {% endblock %}
+   ```
+At this time, **posts_list.html** and **home.html** will have the same layout but have different content and title.
