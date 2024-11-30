@@ -26,35 +26,6 @@ cd myproject
 python manage.py runserver
 ```
 
-### How-to: Create a new app/module 
-```bash
-cd myproject
-python manage.py startapp posts # Create posts app
-```
-
-The source tree will look like:
-```commandline
-.
-└── myproject
-  ├── manage.py
-  ├── myproject
-  │  ├── __init__.py
-  │  ├── asgi.py
-  │  ├── settings.py
-  │  ├── urls.py
-  │  ├── views.py
-  │  └── wsgi.py
-  └── posts
-     ├── __init__.py
-     ├── admin.py
-     ├── apps.py
-     ├── migrations
-     │  └── __init__.py
-     ├── models.py
-     ├── tests.py
-     └── views.py
-```
-
 ### How-to: Render a response/view regarding a URL
 1. Define a view (i.e: **my_view**) in `myproject/myproject/views.py`:
     ```python
@@ -179,4 +150,92 @@ The source tree will look like:
    def homepage(request):
        # return HttpResponse('Hello world! I am home.')
        return render(request, 'home.html')
+   ```
+
+### How-to: Develop an app/module
+
+1. Create a new app name **posts** by `manage.py` script:
+   ```bash
+   cd myproject
+   python manage.py startapp posts # Create posts app
+   ```
+
+   The source tree will look like:
+   ```commandline
+   .
+   └── myproject
+      ├── manage.py
+      ├── myproject
+      │  ├── __init__.py
+      │  ├── asgi.py
+      │  ├── settings.py
+      │  ├── urls.py
+      │  ├── views.py
+      │  └── wsgi.py
+      ├── posts          <-- New created app
+      │  ├── __init__.py
+      │  ├── admin.py
+      │  ├── apps.py
+      │  ├── migrations
+      │  │  └── __init__.py
+      │  ├── models.py
+      │  ├── tests.py
+      │  └── views.py
+      ├── static
+      │  ├── css
+      │  │  └── style.css
+      │  └── js
+      │     └── main.js
+      └── templates
+         ├── about.html
+         └── home.html
+   ```
+2. Register the new app in the main project in `myproject/myproject/settings.py`:
+   ```python
+   # Application definition
+
+   INSTALLED_APPS = [
+       'django.contrib.admin',
+       'django.contrib.auth',
+       'django.contrib.contenttypes',
+       'django.contrib.sessions',
+       'django.contrib.messages',
+       'django.contrib.staticfiles',
+       'posts',
+   ]
+   ```
+3. Create a new HTML template in `myproject/posts/templates/posts/` folder.
+4. Render that HTML in `myproject/posts/views.py`:
+   ```python
+   from django.shortcuts import render
+   
+   
+   # Create your views here.
+   def posts_list(request):
+       return render(request, 'posts/posts_list.html')
+   ```
+
+5. Map `posts_list` view to `/posts` url in `myproject/posts/urls.py`:
+   ```python
+   from django.urls import path
+   
+   from . import views
+      
+   urlpatterns = [
+       path('', views.posts_list)
+   ]
+   ```
+6. Register with the main project about the `/posts` url in `myproject/myproject/urls.py`:
+   ```python
+   from django.contrib import admin
+   from django.urls import path, include
+      
+   from . import views
+      
+   urlpatterns = [
+       path('admin/', admin.site.urls),
+       path('', views.homepage),
+       path('about', views.about),
+       path('posts', include('posts.urls'))  # Use posts.urls for posts url
+   ]
    ```
