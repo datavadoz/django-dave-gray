@@ -303,3 +303,32 @@ python manage.py runserver
    {% endblock %}
    ```
 At this time, **posts_list.html** and **home.html** will have the same layout but have different content and title.
+
+### How-to: Create a model and migrate it
+1. Create a new model in `myproject/posts/models.py`:
+   ```python
+   from django.db import models
+
+   # Create your models here.
+   class Post(models.Model):
+       title = models.CharField(max_length=75)
+       body = models.TextField()
+       slug = models.SlugField()
+       date = models.DateTimeField(auto_now_add=True)
+   ```
+2. Make a new migration:
+   ```
+   $ cd myproject
+   $ python manage.py makemigrations
+   Migrations for 'posts':
+     posts/migrations/0001_initial.py
+       + Create model Post
+   ```
+3. Run migration:
+   ```
+   $ python manage.py migrate
+   Operations to perform:
+     Apply all migrations: admin, auth, contenttypes, posts, sessions
+   Running migrations:
+     Applying posts.0001_initial... OK
+   ```
