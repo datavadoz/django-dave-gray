@@ -332,3 +332,22 @@ At this time, **posts_list.html** and **home.html** will have the same layout bu
    Running migrations:
      Applying posts.0001_initial... OK
    ```
+
+### How-to: Interact with ORM model
+ORM stands for Object Relational Mapping. It is the intermediary between Python code and database.
+
+To create new model:
+```python
+from posts.models import Post
+
+p = Post()
+p.title = 'My First Post!'
+p.save()
+
+p = Post()
+p.title = 'My Second Post!'
+p.save()
+
+posts = Post.objects.all()
+print(posts)
+```
