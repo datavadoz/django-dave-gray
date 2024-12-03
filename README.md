@@ -351,3 +351,42 @@ p.save()
 posts = Post.objects.all()
 print(posts)
 ```
+
+### How-to: Create admin user
+```bash
+python manage.py createsuperuser
+# Then fill in username and password
+```
+
+### How-to: Register a model to work with it in admin panel
+Edit `myproject/posts/admin.py` file:
+```python
+from django.contrib import admin
+from .models import Post
+
+# Register your models here.
+admin.site.register(Post)
+```
+
+### How-to: Pass model data into template then render it
+1. Import the model in `myproject/posts/views.py` and past its objects to `render()` function:
+   ```python
+   from django.shortcuts import render
+   from .models import Post
+   
+   
+   # Create your views here.
+   def posts_list(request):
+       posts = Post.objects.all().order_by('-date')
+       return render(request, 'posts/posts_list.html', {'posts': posts})
+   ```
+2. In `posts_list.html` file, use for loop and obtain object data:
+   ```html
+   {% for post in posts %}
+   <article>
+       <h2>{{ post.title }}</h2>
+       <p>{{ post.date }}</p>
+       <p>{{ post.body }}</p>
+   </article>
+   {% endfor %}
+   ```
