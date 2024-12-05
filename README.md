@@ -1,6 +1,17 @@
 # Django Handbook
 
 ## How-to ...
+1. [Create a new project](#how-to-create-a-new-project)
+2. [Start a dev server](#how-to-start-a-dev-server)
+3. [Render a response/view regarding a URL](#how-to-render-a-responseview-regarding-a-url)
+4. [Put HTML, CSS, JS in your views](#how-to-put-html-css-js-in-your-views)
+5. [Develop an app/module](#how-to-develop-an-appmodule)
+6. [Use template](#how-to-use-template)
+7. [Create a model and migrate it](#how-to-create-a-model-and-migrate-it)
+8. [Interact with ORM model](#how-to-interact-with-orm-model)
+9. [Create admin user](#how-to-create-admin-user)
+10. [Register a model to work with it in admin panel](#how-to-register-a-model-to-work-with-it-in-admin-panel)
+11. [Pass model data into template then render it](#how-to-pass-model-data-into-template-then-render-it)
 
 ### How-to: Create a new project
 ```bash
