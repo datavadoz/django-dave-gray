@@ -12,6 +12,7 @@
 9. [Create admin user](#how-to-create-admin-user)
 10. [Register a model to work with it in admin panel](#how-to-register-a-model-to-work-with-it-in-admin-panel)
 11. [Pass model data into template then render it](#how-to-pass-model-data-into-template-then-render-it)
+12. [Use named URL instead of explicit URL](#how-to-use-named-url-and-slug-instead-of-explicit-url)
 
 ### How-to: Create a new project
 ```bash
@@ -400,4 +401,33 @@ admin.site.register(Post)
        <p>{{ post.body }}</p>
    </article>
    {% endfor %}
+   ```
+
+### How-to: Use named URL and slug instead of explicit URL
+1. Modified `myproject/posts/urls.py` to add `name` param and `app_name` variable:
+   ```python
+   from django.urls import path
+
+   from . import views
+   
+   app_name = 'posts'
+
+   urlpatterns = [
+       path('', views.posts_list, name='list'),
+       path('<slug:slug>', views.post_page, name='page'),
+   ]
+   ```
+2. Update `layout.html` template to put URL named `list` of `posts` app in `href` tag.
+   ```html
+    <a href="{% url 'posts:list' %}">📰</a>
+   ```
+3. Update `posts_list.html` template to put URL named `page` of `posts` app in `href` tag. Also put the slug of specific post as well:
+   ```html
+   <article>
+      <h2>
+          <a href="{% url 'posts:page' slug=post.slug %}">{{ post.title }}</a>
+      </h2>
+      <p>{{ post.date }}</p>
+      <p>{{ post.body }}</p>
+   </article>
    ```
