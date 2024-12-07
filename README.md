@@ -13,6 +13,7 @@
 10. [Register a model to work with it in admin panel](#how-to-register-a-model-to-work-with-it-in-admin-panel)
 11. [Pass model data into template then render it](#how-to-pass-model-data-into-template-then-render-it)
 12. [Use named URL instead of explicit URL](#how-to-use-named-url-and-slug-instead-of-explicit-url)
+13. [Upload an image](#how-to-upload-an-image)
 
 ### How-to: Create a new project
 ```bash
@@ -430,4 +431,40 @@ admin.site.register(Post)
       <p>{{ post.date }}</p>
       <p>{{ post.body }}</p>
    </article>
+   ```
+
+## How-to: Upload an image
+1. Install an additional Python package named `Pillow`:
+   ```commandline
+   pip install pillow
+   ```
+2. Setup `MEDIA_URL` and `MEDIA_ROOT` in `myproject/myproject/settings.py`:
+   ```python
+   MEDIA_URL = 'media/'
+   MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+   ```
+3. Register declared `MEDIA_URL` and `MEDIA_ROOT` in `myproject/myproject/urls.py`:  
+4. Update the model with `ImageField` that need to upload image (i.e: `post`):
+   ```python
+   from django.db import models
+   
+   # Create your models here.
+   class Post(models.Model):
+       title = models.CharField(max_length=75)
+       body = models.TextField()
+       slug = models.SlugField()
+       date = models.DateTimeField(auto_now_add=True)
+       banner = models.ImageField(default='fallback.png', blank=True)  # This line
+   
+       def __str__(self):
+           return self.title
+   ```
+5. Migrate updated model:
+   ```commandline
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+6. Update HTML template to show image:
+   ```html
+   <img class="banner" src="{{ post.banner.url }}" alt="{{ post.title }}">
    ```
