@@ -14,6 +14,7 @@
 11. [Pass model data into template then render it](#how-to-pass-model-data-into-template-then-render-it)
 12. [Use named URL instead of explicit URL](#how-to-use-named-url-and-slug-instead-of-explicit-url)
 13. [Upload an image](#how-to-upload-an-image)
+14. [Add a User Register form](#how-to-add-a-user-register-form)
 
 ### How-to: Create a new project
 ```bash
