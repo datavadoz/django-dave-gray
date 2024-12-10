@@ -468,3 +468,29 @@ admin.site.register(Post)
    ```html
    <img class="banner" src="{{ post.banner.url }}" alt="{{ post.title }}">
    ```
+
+## How-to: Add a User Register form
+1. Declare `UserCreationForm` object in `views.py`:
+   ```python
+   from django.contrib.auth.forms import UserCreationForm
+   from django.shortcuts import render, redirect
+
+   def register(request):
+       if request.method == 'POST':
+           form = UserCreationForm(request.POST)
+           if form.is_valid():
+               form.save()
+               return redirect('posts:list')
+       else:
+           form = UserCreationForm()
+
+       return render(request, 'users/register.html', {'form': form})
+   ```
+2. Use `form` Python object in template
+   ```html
+   <form action="/users/register/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button>Submit</button>
+   </form>
+   ```
