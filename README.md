@@ -15,6 +15,7 @@
 12. [Use named URL instead of explicit URL](#how-to-use-named-url-and-slug-instead-of-explicit-url)
 13. [Upload an image](#how-to-upload-an-image)
 14. [Add a User Register form](#how-to-add-a-user-register-form)
+15. [Login & Authentication](#how-to-login--authentication)
 
 ### How-to: Create a new project
 ```bash
@@ -494,4 +495,23 @@ admin.site.register(Post)
         {{ form }}
         <button>Submit</button>
    </form>
+   ```
+
+## How-to: Login & Authentication
+Import `AuthenticationForm` and create a view for it. Use `login()` function to let user login once the input is valid:
+   ```python
+   from django.contrib.auth.forms import AuthenticationForm
+   from django.contrib.auth import login
+   from django.shortcuts import render, redirect
+
+   def login_view(request):
+       if request.method == 'POST':
+          form = AuthenticationForm(data=request.POST)
+          if form.is_valid():
+             login(request, form.get_user())
+             return redirect('posts:list')
+       else:
+          form = AuthenticationForm()
+       
+       return render(request, 'users/login.html', {'form': form})
    ```
