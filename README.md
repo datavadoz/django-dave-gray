@@ -16,6 +16,7 @@
 13. [Upload an image](#how-to-upload-an-image)
 14. [Add a User Register form](#how-to-add-a-user-register-form)
 15. [Login & Authentication](#how-to-login--authentication)
+16. [Authorization](#how-to-authorization)
 
 ### How-to: Create a new project
 ```bash
