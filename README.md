@@ -500,22 +500,22 @@ admin.site.register(Post)
 
 ## How-to: Login & Authentication
 Import `AuthenticationForm` and create a view for it. Use `login()` function to let user login once the input is valid:
-   ```python
-   from django.contrib.auth.forms import AuthenticationForm
-   from django.contrib.auth import login
-   from django.shortcuts import render, redirect
+```python
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
 
-   def login_view(request):
-       if request.method == 'POST':
-          form = AuthenticationForm(data=request.POST)
-          if form.is_valid():
-             login(request, form.get_user())
-             return redirect('posts:list')
-       else:
-          form = AuthenticationForm()
-       
-       return render(request, 'users/login.html', {'form': form})
-   ```
+def login_view(request):
+    if request.method == 'POST':
+       form = AuthenticationForm(data=request.POST)
+       if form.is_valid():
+          login(request, form.get_user())
+          return redirect('posts:list')
+    else:
+       form = AuthenticationForm()
+    
+    return render(request, 'users/login.html', {'form': form})
+```
 
 ## How-to: Authorization
 1. Required login to render a view
@@ -530,10 +530,10 @@ Import `AuthenticationForm` and create a view for it. Use `login()` function to 
    ```
 
 2. Render a part of view if user is login
-```html
-{% if user.is_authenticated %}
-    <item_need_to_render_when_user_login/>
-{% else %}
-    <item_need_to_render_no_need_user_login/>
-{% endif %}
-```
+   ```html
+   {% if user.is_authenticated %}
+       <item_need_to_render_when_user_login/>
+   {% else %}
+       <item_need_to_render_no_need_user_login/>
+   {% endif %}
+   ```
