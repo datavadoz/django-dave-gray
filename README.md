@@ -515,3 +515,24 @@ Import `AuthenticationForm` and create a view for it. Use `login()` function to 
        
        return render(request, 'users/login.html', {'form': form})
    ```
+
+## How-to: Authorization
+1. Required login to render a view
+   ```python
+   from django.contrib.auth.decorators import login_required
+   from django.shortcuts import render
+   
+   
+   @login_required(login_url="/users/login/")
+   def post_new(request):
+       return render(request, 'posts/post_new.html')
+   ```
+
+2. Render a part of view if user is login
+```html
+{% if user.is_authenticated %}
+    <item_need_to_render_when_user_login/>
+{% else %}
+    <item_need_to_render_no_need_user_login/>
+{% endif %}
+```
